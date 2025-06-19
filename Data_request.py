@@ -4,6 +4,7 @@ import datetime
 
 from c_mssql import DB_Config
 dbc_trace_business=DB_Config(server="192.168.105.11",port=1433,database="TSC-P",user="traceservice",password="WRefe34!we",driver="ODBC Driver 17 for SQL Server")
+# dbc_trace_business=DB_Config(server="192.168.105.11",port=1433,database="TSC-P",user="traceservice",password="WRefe34!we",driver="ODBC Driver 18 for SQL Serve",extra_params="TrustServerCertificate=yes") 
 # [trace_business]
 # NAME= TSC-P
 # HOST= 192.168.105.11
@@ -358,5 +359,5 @@ trace_conn.close()
 
 
 # 将datalist转成json写入test2.json
-with open("test2.json", "w",encoding="utf-8") as f:
+with open("TraceData.json", "w",encoding="utf-8") as f:
     f.write(JSONEncoder().encode(data_list))

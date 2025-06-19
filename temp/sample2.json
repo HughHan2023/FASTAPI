@@ -1,0 +1,11 @@
+def main(arg1: str) -> dict:
+    import requests
+    url = "http://192.168.15.83:5000/execute"
+    payload = {
+        "code": arg1
+    }
+    response = requests.post(url, json=payload)
+    response_data = response.json()
+    return {
+        "result": response_data.get("output") 
+    }
