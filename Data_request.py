@@ -246,9 +246,7 @@ cursor=trace_conn.execute("""SELECT
       ,[apheresis_end]
       ,[order_status]
       ,[is_closed]
-      ,[Apheresis_ArrivalDate]
       ,[Apheresis_ReleaseDate]
-      ,[DanCaiVolume]
       ,[QualityDetailStatus]
       ,[BatchNo]
   FROM [BI_DW].[dbo].[FACT_Apheresis_Order]""")
@@ -310,8 +308,6 @@ cursor=trace_conn.execute("""select
                             SaleOrderDate=so.order_date,
                             HostipalID=so.medical_institution_id,
                             SCustomerNo=so.patient_code,
-                            SCustomerName=so.patient_name,
-                            SCustomerNameSX=so.patient_name_abb,
                             SaleOrderType=IIF(so.order_type=2,'择期订单','常规订单')  ,
                             casT(IIF(so.order_status='关闭',1,0) as BIT) AS is_closed
                             from [TraceApp-P].[dbo].[SalesOrder] so with(nolock)
@@ -358,6 +354,6 @@ while row:
 trace_conn.close()
 
 
-# 将datalist转成json写入test2.json
+
 with open("TraceData.json", "w",encoding="utf-8") as f:
     f.write(JSONEncoder().encode(data_list))

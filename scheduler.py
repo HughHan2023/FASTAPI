@@ -1,9 +1,10 @@
 import schedule
 import time
 import logging
-from datetime import datetime
+import datetime
 import sys
 import os
+import decimal  # 添加decimal模块导入
 
 # 配置日志
 logging.basicConfig(
@@ -22,8 +23,11 @@ def run_data_request():
         current_dir = os.path.dirname(os.path.abspath(__file__))
         # 切换到脚本所在目录
         os.chdir(current_dir)
-        # 执行Data_request.py
-        exec(open('Data_request.py', encoding='utf-8').read())
+        # 使用importlib动态导入模块
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("Data_request", "Data_request.py")
+        data_request = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(data_request)
         logging.info("数据请求任务执行完成")
     except Exception as e:
         logging.error(f"执行任务时发生错误: {str(e)}")
@@ -35,7 +39,7 @@ def main():
     schedule.every().day.at("00:00").do(run_data_request)
     
     # 立即执行一次（可选）
-    # run_data_request()
+    run_data_request()
     
     while True:
         try:
